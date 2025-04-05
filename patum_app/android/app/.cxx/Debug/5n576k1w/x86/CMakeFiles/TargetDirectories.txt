@@ -1,0 +1,2 @@
+/home/adityavk/StudioProjects/Patum/patum_app/android/app/.cxx/Debug/5n576k1w/x86/CMakeFiles/edit_cache.dir
+/home/adityavk/StudioProjects/Patum/patum_app/android/app/.cxx/Debug/5n576k1w/x86/CMakeFiles/rebuild_cache.dir

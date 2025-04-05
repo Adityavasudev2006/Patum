@@ -1,0 +1,2 @@
+/home/adityavk/StudioProjects/neeti/android/app/.cxx/Debug/6v2w1m1r/x86/CMakeFiles/edit_cache.dir
+/home/adityavk/StudioProjects/neeti/android/app/.cxx/Debug/6v2w1m1r/x86/CMakeFiles/rebuild_cache.dir
