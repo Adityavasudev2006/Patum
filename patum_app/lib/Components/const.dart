@@ -42,3 +42,8 @@ Base your answers *only* on the information provided below and your general know
 
 Start the conversation by greeting the user and mentioning your capabilities, including image analysis and understanding voice messages (remind them voice is transcribed first if you implement STT). Ask how you can help.
 """;
+
+String policeNumber = '9999999999';
+String pNumber = '';
+String medicalNumber = '0000000000';
+String emergencyNumber = '6000000000';

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-
-String policeNumber = '9400421733';
-String pNumber = '';
-String medicalNumber = '9999999999';
-String emergencyNumber = '8888888888';
+import 'const.dart';
 
 class CallModule {
   static callNumber() async {
