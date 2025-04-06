@@ -252,10 +252,8 @@ class _ChatBotState extends State<ChatBot> {
               content: Text('Recording stopped.'),
               backgroundColor: Colors.blueGrey));
         }
-        // --- Trigger Transcription and Sending ---
-        _transcribeAndSendAudio(path); // Pass the confirmed path variable
+        _transcribeAndSendAudio(path);
       } else {
-        // Handle case where stop() returns null
         print("Recording stop returned null path.");
         if (mounted) {
           // Check mount status
@@ -264,7 +262,7 @@ class _ChatBotState extends State<ChatBot> {
               backgroundColor: Colors.orange));
           setState(() {
             _audioPath = null;
-          }); // Reset path state
+          });
         }
       }
     } catch (e) {
@@ -274,7 +272,6 @@ class _ChatBotState extends State<ChatBot> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Error stopping recording: $e'),
             backgroundColor: Colors.red));
-        // Ensure state is reset on error
         setState(() {
           _isRecording = false;
           _audioPath = null;
@@ -334,7 +331,6 @@ class _ChatBotState extends State<ChatBot> {
     }
   }
 
-  // Sending Logic (Handles Text, Image+Text)
   Future<void> _send() async {
     final messageText = _textController.text.trim();
     final imageFile = _pickedImageFile;
@@ -354,7 +350,6 @@ class _ChatBotState extends State<ChatBot> {
       return;
     }
 
-    // Add user message bubble(s)
     if (imageFile != null) {
       _addMessage(
           messageText.isEmpty
@@ -365,7 +360,6 @@ class _ChatBotState extends State<ChatBot> {
       _addMessage(messageText, true);
     }
 
-    // Prepare for sending
     _textController.clear();
     final imageToSend = _pickedImageFile; // Capture before clearing
     if (mounted) {
@@ -375,22 +369,17 @@ class _ChatBotState extends State<ChatBot> {
       });
     }
 
-    // Call internal send function
     await _sendMessageInternal(text: messageText, imageFile: imageToSend);
   }
 
-  // **** FIXED _sendMessageInternal ****
   Future<void> _sendMessageInternal(
       {required String text, XFile? imageFile}) async {
     List<Part> parts = [];
 
-    // Process Image if it exists
     if (imageFile != null) {
       try {
-        // **** Declare 'imageBytes' HERE ****
         final Uint8List imageBytes = await imageFile.readAsBytes();
 
-        // **** Declare 'mimeType' HERE ****
         String mimeType = 'image/jpeg'; // Default
         final String lowerPath = imageFile.path.toLowerCase();
         if (lowerPath.endsWith('.png'))
@@ -402,48 +391,40 @@ class _ChatBotState extends State<ChatBot> {
         else if (lowerPath.endsWith('.heic'))
           mimeType = 'image/heic';
         else if (lowerPath.endsWith('.heif')) mimeType = 'image/heif';
-        // Add more mime types if needed
 
-        // Use the locally declared variables
         parts.add(DataPart(mimeType, imageBytes));
         print("Added image part: ${imageFile.path}, mime: $mimeType");
       } catch (e) {
         print("Error reading image file: $e");
-        _addMessage("Error reading image file. Could not send.",
-            false); // Use _addMessage method
+        _addMessage("Error reading image file. Could not send.", false);
         if (mounted) setState(() => _isLoading = false);
-        return; // Stop sending if image reading fails
+        return;
       }
     }
 
-    // Add text part if available
     if (text.isNotEmpty) {
       parts.add(TextPart(text));
       print("Added text part: $text");
     }
 
-    // Check if parts list is actually populated
     if (parts.isEmpty) {
       print("Send called with no valid parts to send.");
       if (mounted) setState(() => _isLoading = false);
       return;
     }
 
-    // --- Actual API Call ---
     try {
-      final response = await _chatSession
-          .sendMessage(Content.multi(parts)); // Use Content.multi
+      final response = await _chatSession.sendMessage(Content.multi(parts));
       final botResponse = response.text;
 
       if (botResponse == null || botResponse.isEmpty) {
-        _addMessage("Received an empty response. Can you please rephrase?",
-            false); // Use _addMessage
+        _addMessage(
+            "Received an empty response. Can you please rephrase?", false);
       } else {
-        _addMessage(botResponse, false); // Use _addMessage
-        await _speak(botResponse); // Speak the response
+        _addMessage(botResponse, false);
+        await _speak(botResponse);
       }
     } catch (e) {
-      // ... (Error handling using _addMessage) ...
       print("Error sending message: $e");
       String errorMessage =
           "Sorry, an error occurred while getting a response.";
@@ -460,30 +441,26 @@ class _ChatBotState extends State<ChatBot> {
       } else if (e.toString().contains('API key not valid')) {
         errorMessage = 'Invalid API Key.';
       }
-      _addMessage(errorMessage, false); // Use _addMessage
+      _addMessage(errorMessage, false);
     } finally {
       if (mounted) {
         setState(() {
           _isLoading = false;
         });
       }
-      _scrollToBottom(); // Use _scrollToBottom method
+      _scrollToBottom();
     }
   }
 
-  // **** _addMessage METHOD DEFINITION ****
-  // Message List Management & Scrolling
   void _addMessage(String text, bool isUserMessage) {
     if (mounted) {
-      // Always check if mounted before setState
       setState(() {
         _messages.add(ChatMessage(text: text, isUserMessage: isUserMessage));
       });
-      _scrollToBottom(); // Scroll after adding message
+      _scrollToBottom();
     }
   }
 
-  // **** _scrollToBottom METHOD DEFINITION ****
   void _scrollToBottom() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients && mounted) {
@@ -512,7 +489,6 @@ class _ChatBotState extends State<ChatBot> {
         centerTitle: true,
         actions: [
           IconButton(
-            // TTS Toggle Button
             icon: Icon(
               _isTtsEnabled
                   ? Icons.volume_up_rounded
@@ -527,7 +503,6 @@ class _ChatBotState extends State<ChatBot> {
       ),
       body: Column(
         children: [
-          // Message List Area
           Expanded(
             child: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(), // Dismiss keyboard
@@ -543,8 +518,6 @@ class _ChatBotState extends State<ChatBot> {
               ),
             ),
           ),
-
-          // Loading Indicator
           if (_isLoading)
             Padding(
               padding:
@@ -565,18 +538,13 @@ class _ChatBotState extends State<ChatBot> {
                 ],
               ),
             ),
-
-          // Image Preview
           if (_pickedImageFile != null) _buildImagePreview(),
-
-          // Input Area or Unavailable Message
           if (_isChatInitialized)
             _buildMultimodalInputArea()
           else if (!_isLoading &&
               _messages.isNotEmpty &&
               _messages.last.text.contains("initialization failed"))
-            const SizedBox
-                .shrink() // Don't show generic if specific error shown
+            const SizedBox.shrink()
           else if (!_isLoading)
             Container(
               padding: const EdgeInsets.all(20.0),
@@ -590,7 +558,6 @@ class _ChatBotState extends State<ChatBot> {
     );
   }
 
-  // Image Preview Widget
   Widget _buildImagePreview() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
@@ -625,10 +592,9 @@ class _ChatBotState extends State<ChatBot> {
           )
         ],
       ),
-    ); // Added mounted check
+    );
   }
 
-  // Enhanced Multimodal Input Area Widget
   Widget _buildMultimodalInputArea() {
     return Container(
       padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 12.0),
@@ -681,7 +647,6 @@ class _ChatBotState extends State<ChatBot> {
                       );
                     },
             ),
-            // Text Input Field
             Expanded(
               child: TextField(
                 controller: _textController,
@@ -722,9 +687,8 @@ class _ChatBotState extends State<ChatBot> {
                   if (mounted) setState(() {});
                 },
               ),
-            ), // Added mounted check for safety
+            ),
             const SizedBox(width: 4.0),
-            // Conditional Mic/Send Button
             _buildMicOrSendButton()
           ],
         ),
@@ -732,20 +696,16 @@ class _ChatBotState extends State<ChatBot> {
     );
   }
 
-  // Helper widget for Mic/Send Button logic
   Widget _buildMicOrSendButton() {
     bool canSend = !_isLoading &&
         (_textController.text.trim().isNotEmpty || _pickedImageFile != null);
 
     if (_isRecording) {
       return IconButton(
-        // Stop Recording Button
         icon: const Icon(Icons.stop_circle_rounded,
             color: Colors.redAccent, size: 28),
-        // Slightly larger icon
         tooltip: 'Stop Recording',
         padding: const EdgeInsets.all(12.0),
-        // Ensure tap area is sufficient
         onPressed: _stopRecording,
       );
     } else if (canSend) {
@@ -771,7 +731,6 @@ class _ChatBotState extends State<ChatBot> {
       );
     } else {
       return IconButton(
-        // Start Recording Button
         icon: const Icon(Icons.mic_none_rounded,
             color: patumPrimaryTeal, size: 28),
         tooltip: 'Record Voice',
@@ -782,7 +741,6 @@ class _ChatBotState extends State<ChatBot> {
   }
 }
 
-// ChatMessage Data Model
 class ChatMessage {
   final String text;
   final bool isUserMessage;
@@ -790,7 +748,6 @@ class ChatMessage {
   ChatMessage({required this.text, required this.isUserMessage});
 }
 
-// MessageBubble Widget
 class MessageBubble extends StatelessWidget {
   final ChatMessage message;
 

@@ -52,6 +52,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   provider: ^6.0.0
   intl: ^0.18.0
+  shared_preferences: ^2.2.2
 
 
 
@@ -83,9 +84,9 @@ flutter:
     - assets/AlertSound.mp3
     - .env
       # An image asset can refer to one or more resolution-specific "variants", see
-      # https://flutter.dev/to/resolution-aware-images
+    # https://flutter.dev/to/resolution-aware-images
 
-      # For details regarding adding assets from package dependencies, see
+    # For details regarding adding assets from package dependencies, see
     # https://flutter.dev/to/asset-from-package
     
     # To add custom fonts to your application, add a fonts section here,
