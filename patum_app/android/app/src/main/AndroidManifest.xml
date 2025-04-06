@@ -51,7 +51,7 @@
     </queries>
 
     <application
-        android:label="neeti"
+        android:label="Patum"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

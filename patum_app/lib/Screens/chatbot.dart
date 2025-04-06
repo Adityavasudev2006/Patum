@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:io';
 import 'dart:typed_data'; // Required for image bytes
-import 'package:neeti/Components/const.dart';
+import 'package:Patum/Components/const.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter/scheduler.dart';

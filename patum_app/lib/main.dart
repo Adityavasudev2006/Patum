@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:neeti/Components/location_module.dart';
-import 'package:neeti/Screens/records.dart';
-import 'package:neeti/Components/camera_module.dart';
-import 'package:neeti/Components/call_module.dart';
+import 'package:Patum/Components/location_module.dart';
+import 'package:Patum/Screens/records.dart';
+import 'package:Patum/Components/camera_module.dart';
+import 'package:Patum/Components/call_module.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:neeti/Screens/chatbot.dart';
-import 'package:neeti/Components/const.dart';
+import 'package:Patum/Screens/chatbot.dart';
+import 'package:Patum/Components/const.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
