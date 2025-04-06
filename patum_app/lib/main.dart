@@ -13,10 +13,10 @@ import 'package:neeti/Components/const.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  runApp(Neeti());
+  runApp(Patum());
 }
 
-class Neeti extends StatelessWidget {
+class Patum extends StatelessWidget {
   // The root widget
   @override
   Widget build(BuildContext context) {
