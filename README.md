@@ -69,7 +69,7 @@ Unauthorized cloning to personal GitHub accounts is strictly prohibited
 The project concept, implementation, and intellectual property are the original work of the repository owner
 The repository owner has made the primary contributions to this project
 
-Any use, reproduction, or distribution of this project without express written permission from the repository owner may result in legal action. For licensing inquiries or permission requests, please contact the repository owner directly.<br>
+Any use, reproduction, or distribution of this project without the permission from the repository owner may result in legal action. For licensing inquiries or permission requests, please contact the repository owner directly.<br>
 © 2025 Repository Owner. All Rights Reserved.<br>
 See the [LICENSE](LICENSE) file for details.
 
