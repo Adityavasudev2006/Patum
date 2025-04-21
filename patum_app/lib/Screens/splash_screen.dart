@@ -1,8 +1,10 @@
 import 'dart:async';
-import '../main.dart';
+import 'login.dart';
 import 'package:flutter/material.dart';
 
 class splash_screen extends StatefulWidget {
+  static String id = "splash_screen";
+
   @override
   State<splash_screen> createState() => _splash_screenState();
 }

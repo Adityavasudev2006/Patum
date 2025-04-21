@@ -10,16 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3d818a65-d5cf-4078-9096-45ac006f241d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/arm64-v8a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/arm64-v8a/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/armeabi-v7a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/armeabi-v7a/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86_64/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86_64/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/chatbot.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/chatbot.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/records.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/records.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/test/widget_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +75,11 @@
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/patum_app/lib/Screens" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Run Neeti" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/patum_app/lib/main.dart" />
@@ -136,29 +142,8 @@
           <option name="timeStamp" value="56" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/patum_app/lib/main.dart</url>
-          <line>397</line>
-          <option name="timeStamp" value="57" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/patum_app/lib/main.dart</url>
-          <line>455</line>
-          <option name="timeStamp" value="58" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/patum_app/lib/main.dart</url>
-          <line>311</line>
-          <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/patum_app/lib/main.dart</url>
-          <line>279</line>
-          <option name="timeStamp" value="60" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/patum_app/lib/main.dart</url>
-          <line>247</line>
-          <option name="timeStamp" value="61" />
+          <url>file://$PROJECT_DIR$/patum_app/test/widget_test.dart</url>
+          <option name="timeStamp" value="62" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

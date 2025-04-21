@@ -28,6 +28,8 @@ const Color patumSubtleText = Color(0xFF757575);
 class ChatBot extends StatefulWidget {
   const ChatBot({super.key});
 
+  static String id = "chatbot_screen";
+
   @override
   State<ChatBot> createState() => _ChatBotState();
 }

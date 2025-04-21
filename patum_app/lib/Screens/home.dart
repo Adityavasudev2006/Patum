@@ -8,6 +8,8 @@ import 'package:Patum/Screens/chatbot.dart';
 import 'package:Patum/Components/const.dart';
 
 class MainPage extends StatefulWidget {
+  static String id = "main_screen";
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -94,10 +96,7 @@ class _MainPageState extends State<MainPage> {
                         MainTextButton(
                           ButtonText: 'Complete Profile',
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Records()));
+                            Navigator.pushNamed(context, Records.id);
                           },
                         ),
                       ],
@@ -353,8 +352,7 @@ class SliderOptions extends StatelessWidget {
               optionText: 'Queries',
               logoPlace: 'assets/qna_logo.png',
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatBot()));
+                Navigator.pushNamed(context, ChatBot.id);
               },
             ),
           ],
@@ -397,7 +395,7 @@ class BottomBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, 'records');
+                Navigator.pushNamed(context, Records.id);
               },
               child: Icon(
                 Icons.import_contacts_sharp,

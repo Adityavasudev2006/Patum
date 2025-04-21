@@ -1,6 +1,9 @@
+import 'package:Patum/Screens/home.dart';
 import 'package:flutter/material.dart';
 
 class Records extends StatelessWidget {
+  static String id = "records_screen";
+
   @override
   Widget build(BuildContext context) {
     var listnames = [
@@ -201,7 +204,7 @@ class BottomBar extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, 'home');
+                Navigator.pushNamed(context, MainPage.id);
               },
               child: Icon(
                 Icons.home,
