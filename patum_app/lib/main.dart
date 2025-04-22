@@ -1,3 +1,4 @@
+import 'package:Patum/Screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -7,6 +8,7 @@ import 'package:Patum/Screens/records.dart';
 import 'package:Patum/Screens/chatbot.dart';
 import 'Screens/splash_screen.dart';
 import 'package:Patum/Screens/login.dart';
+import 'package:Patum/Screens/signup.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,10 +31,12 @@ class Patum extends StatelessWidget {
         title: 'Patum',
         home: splash_screen(),
         routes: {
+          SignUp.id: (context) => SignUp(),
           HomeScreen.id: (context) => HomeScreen(),
           splash_screen.id: (context) => splash_screen(),
           MainPage.id: (context) => MainPage(),
           Records.id: (context) => Records(),
+          ProfileScreen.id: (context) => ProfileScreen(),
           ChatBot.id: (context) => ChatBot(),
         },
       ),

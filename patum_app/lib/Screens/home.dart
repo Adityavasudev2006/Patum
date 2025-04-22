@@ -1,3 +1,4 @@
+import 'package:Patum/Screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:Patum/Components/location_module.dart';
@@ -6,6 +7,7 @@ import 'package:Patum/Components/camera_module.dart';
 import 'package:Patum/Components/call_module.dart';
 import 'package:Patum/Screens/chatbot.dart';
 import 'package:Patum/Components/const.dart';
+import 'package:Patum/Components/bottom_bar.dart';
 
 class MainPage extends StatefulWidget {
   static String id = "main_screen";
@@ -96,7 +98,7 @@ class _MainPageState extends State<MainPage> {
                         MainTextButton(
                           ButtonText: 'Complete Profile',
                           onPressed: () {
-                            Navigator.pushNamed(context, Records.id);
+                            Navigator.pushNamed(context, ProfileScreen.id);
                           },
                         ),
                       ],
@@ -202,12 +204,22 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           SliderOptions(),
-          BottomBar(
-            homeIconColor: Colors.red,
-            recordsIconColor: Colors.white,
-            profileIconColor: Colors.white,
-          ),
         ],
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 88, // or any height you want for the navbar
+        child: BottomBar(
+          homeIconColor: Colors.red,
+          recordsIconColor: Colors.white,
+          profileIconColor: Colors.white,
+          onPressed1: () {},
+          onPressed2: () {
+            Navigator.pushNamed(context, Records.id);
+          },
+          onPressed3: () {
+            Navigator.pushNamed(context, ProfileScreen.id);
+          },
+        ),
       ),
     );
   }
@@ -356,111 +368,6 @@ class SliderOptions extends StatelessWidget {
               },
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class BottomBar extends StatelessWidget {
-  const BottomBar({
-    super.key,
-    required this.homeIconColor,
-    required this.recordsIconColor,
-    required this.profileIconColor,
-  });
-
-  final Color homeIconColor;
-  final Color recordsIconColor;
-  final Color profileIconColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(0.0, 17.0, 0.0, 23.0),
-      color: Colors.teal,
-      margin: EdgeInsets.only(top: 10.0),
-      width: double.infinity,
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {},
-              child: Icon(
-                Icons.home,
-                size: 35.0,
-                color: homeIconColor,
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, Records.id);
-              },
-              child: Icon(
-                Icons.import_contacts_sharp,
-                size: 28.0,
-                color: recordsIconColor,
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, 'profile');
-              },
-              child: Icon(
-                Icons.person,
-                size: 30.0,
-                color: profileIconColor,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class clickableOptions extends StatelessWidget {
-  const clickableOptions({
-    super.key,
-    required this.optionText,
-    required this.logoPlace,
-    required this.onPressed,
-  });
-
-  final String optionText;
-  final String logoPlace;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(38.0),
-        child: Container(
-          width: 160,
-          color: Colors.white,
-          margin: EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                optionText,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 5.0,
-              ),
-              Image.asset(
-                logoPlace,
-                width: 60.0,
-              ),
-            ],
-          ),
         ),
       ),
     );

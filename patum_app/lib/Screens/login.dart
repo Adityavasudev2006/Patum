@@ -1,5 +1,9 @@
+import 'package:Patum/Screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // Main Login Screen
 class HomeScreen extends StatelessWidget {
@@ -114,10 +118,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _handleSignup() {
-    print('Navigate to SignUp Screen');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('SignUp functionality not implemented yet.')),
-    );
+    Navigator.pushNamed(context, SignUp.id);
   }
 
   @override

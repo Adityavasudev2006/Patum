@@ -1,5 +1,7 @@
-import 'package:Patum/Screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:Patum/Components/bottom_bar.dart';
+import 'package:Patum/Screens/home.dart';
+import 'package:Patum/Screens/profile.dart';
 
 class Records extends StatelessWidget {
   static String id = "records_screen";
@@ -84,12 +86,22 @@ class Records extends StatelessWidget {
               date: date,
             ),
           ),
-          BottomBar(
-            homeIconColor: Colors.white,
-            recordsIconColor: Colors.red,
-            profileIconColor: Colors.white,
-          ),
         ],
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 88, // or any height you want for the navbar
+        child: BottomBar(
+          homeIconColor: Colors.white,
+          recordsIconColor: Colors.red,
+          profileIconColor: Colors.white,
+          onPressed1: () {
+            Navigator.pushNamed(context, MainPage.id);
+          },
+          onPressed2: () {},
+          onPressed3: () {
+            Navigator.pushNamed(context, ProfileScreen.id);
+          },
+        ),
       ),
     );
   }
@@ -175,64 +187,6 @@ class RecordList extends StatelessWidget {
         );
       },
       itemCount: listnames.length,
-    );
-  }
-}
-
-class BottomBar extends StatelessWidget {
-  const BottomBar({
-    super.key,
-    required this.homeIconColor,
-    required this.recordsIconColor,
-    required this.profileIconColor,
-  });
-
-  final Color homeIconColor;
-  final Color recordsIconColor;
-  final Color profileIconColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(0.0, 17.0, 0.0, 23.0),
-      color: Colors.teal,
-      margin: EdgeInsets.only(top: 10.0),
-      width: double.infinity,
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, MainPage.id);
-              },
-              child: Icon(
-                Icons.home,
-                size: 35.0,
-                color: homeIconColor,
-              ),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Icon(
-                Icons.import_contacts_sharp,
-                size: 28.0,
-                color: recordsIconColor,
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, 'profile');
-              },
-              child: Icon(
-                Icons.person,
-                size: 30.0,
-                color: profileIconColor,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

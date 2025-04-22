@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "962854395919",
+    "project_id": "patum-13332",
+    "storage_bucket": "patum-13332.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962854395919:android:fe111f3aa4a74b027c837a",
+        "android_client_info": {
+          "package_name": "com.AdityaVasudev.Patum"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaHK15DnDzUBxVjmta07lJKjX-eTrhUxM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
