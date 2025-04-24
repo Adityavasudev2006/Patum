@@ -1,14 +1,21 @@
 import 'package:Patum/Screens/home.dart';
 import 'package:Patum/Screens/records.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:Patum/Components/bottom_bar.dart';
 import 'package:Patum/Screens/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-String? first_name = HomeScreen.current_first_name;
-String? last_name = HomeScreen.current_last_name;
-String? email = HomeScreen.current_email;
-String? phone_no = HomeScreen.current_phone_no;
-String? ephone_no = HomeScreen.current_ephone_no;
+final firstNameController =
+    TextEditingController(text: HomeScreen.current_first_name);
+final lastNameController =
+    TextEditingController(text: HomeScreen.current_last_name);
+final phoneController =
+    TextEditingController(text: HomeScreen.current_phone_no);
+final emergencyController =
+    TextEditingController(text: HomeScreen.current_ephone_no);
+final emailController = TextEditingController(text: HomeScreen.current_email);
 
 class ProfileScreen extends StatefulWidget {
   static String id = "profile_screen";
@@ -20,11 +27,43 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isEditing = false;
 
-  final firstNameController = TextEditingController(text: first_name);
-  final lastNameController = TextEditingController(text: last_name);
-  final phoneController = TextEditingController(text: phone_no);
-  final emergencyController = TextEditingController(text: ephone_no);
-  final emailController = TextEditingController(text: email);
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+
+  void saveProfile(String firstName, String lastName, String phone,
+      String emergencyPhone, String email) async {
+    context.loaderOverlay.show();
+
+    final userDetails = await _firestore.collection('user_data').get();
+
+    for (var details in userDetails.docs) {
+      if (details['email'] == HomeScreen.current_email) {
+        // To update the document in Firestore
+        await _firestore.collection('user_data').doc(details.id).update({
+          'first_name': firstName,
+          'last_name': lastName,
+          'email': email,
+          'phone_no': phone,
+          'emergency_no': emergencyPhone,
+        });
+
+        break; // Break the loop after updating the matched user
+      }
+    }
+    final user = await _auth.currentUser;
+    if (user != null) {
+      try {
+        await user.verifyBeforeUpdateEmail(email); // Sends verification email
+        print("Verification email sent to $email. Please verify to update.");
+      } catch (e) {
+        print("Failed to send verification email: $e");
+      }
+    } else {
+      print("No user currently signed in.");
+    }
+
+    context.loaderOverlay.hide();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +152,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     setState(() {
+                      if (isEditing) {
+                        // Save updated values
+                        saveProfile(
+                          firstNameController.text,
+                          lastNameController.text,
+                          phoneController.text,
+                          emergencyController.text,
+                          emailController.text,
+                        );
+                      }
                       isEditing = !isEditing;
                     });
                   },
