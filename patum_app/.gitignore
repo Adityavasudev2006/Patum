@@ -1,4 +1,6 @@
-# Miscellaneous
+# ----------------------------
+# ✅ Miscellaneous
+# ----------------------------
 *.class
 *.log
 *.pyc
@@ -12,18 +14,22 @@
 .swiftpm/
 migrate_working_dir/
 
-# IntelliJ related
+# ----------------------------
+# ✅ IDE Related
+# ----------------------------
+
+# IntelliJ / Android Studio
 *.iml
 *.ipr
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
+# VS Code (optional – uncomment if you don’t want to share settings)
 #.vscode/
 
-# Flutter/Dart/Pub related
+# ----------------------------
+# ✅ Flutter / Dart / Pub
+# ----------------------------
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
@@ -33,14 +39,64 @@ migrate_working_dir/
 .pub/
 /build/
 
-# Symbolication related
+# ----------------------------
+# ✅ Symbolication and Obfuscation
+# ----------------------------
 app.*.symbols
-
-# Obfuscation related
 app.*.map.json
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# ----------------------------
+# ✅ Android Specific
+# ----------------------------
+android/.gradle/
+android/app/debug
+android/app/profile
+android/app/release
+android/local.properties
+
+# ----------------------------
+# ✅ iOS Specific
+# ----------------------------
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/.generated/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/ephemeral/
+ios/Runner.xcworkspace/
+ios/DerivedData/
+
+# ----------------------------
+# ✅ macOS Specific
+# ----------------------------
+macos/Pods/
+macos/.symlinks/
+macos/Flutter/.generated/
+macos/Flutter/ephemeral/
+
+# ----------------------------
+# ✅ Windows Specific
+# ----------------------------
+windows/flutter/ephemeral/
+windows/.dart_tool/
+windows/build/
+
+# ----------------------------
+# ✅ Linux Specific
+# ----------------------------
+linux/flutter/ephemeral/
+linux/build/
+
+# ----------------------------
+# ✅ Web Specific
+# ----------------------------
+web/.dart_tool/
+web/build/
+
+# ----------------------------
+# ✅ Firebase / Secrets (optional if private)
+# ----------------------------
+ios/Runner/GoogleService-Info.plist
+android/app/google-services.json
 .env

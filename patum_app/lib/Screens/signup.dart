@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:Patum/Screens/home.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:Patum/Screens/login.dart';
 
 class SignUp extends StatelessWidget {
   static String id = "signup_screen";
@@ -73,6 +77,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
   bool _isObscured = true; // Track password visibility
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Form key
   final TextEditingController _firstNameController = TextEditingController();
@@ -364,7 +370,7 @@ class _LoginFormState extends State<LoginForm> {
                     if (value!.isEmpty) {
                       return 'Please confirm your password';
                     } else if (value != _passwordController.text) {
-                      return 'Passwords do not match'; // Add this line to check if passwords match
+                      return 'Passwords do not match';
                     }
                     return null; // Return null if everything is fine
                   },
@@ -373,37 +379,69 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(height: 20.0),
               MaterialButton(
                 minWidth: 150.0,
-                // Set a specific width for the button
                 height: 50.0,
-                // Adjust the height to match the smaller width
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     // Form is valid
-                    Navigator.pushNamed(context, MainPage.id);
+                    context.loaderOverlay.show();
+
+                    if (_emailController.text.isNotEmpty &&
+                        _passwordController.text.isNotEmpty) {
+                      try {
+                        final newUser =
+                            await _auth.createUserWithEmailAndPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                        _firestore.collection('user_data').add({
+                          'aadhar': _aadharController.text,
+                          'email': _emailController.text,
+                          'first_name': _firstNameController.text,
+                          'last_name': _lastNameController.text,
+                          'password': _passwordController.text,
+                          'phone_no': _phoneController.text,
+                          'emergency_no': "Not Given.Please Provide",
+                        });
+                        if (newUser != null) {
+                          HomeScreen.current_first_name =
+                              _firstNameController.text;
+                          HomeScreen.current_last_name =
+                              _lastNameController.text;
+                          HomeScreen.current_email = _emailController.text;
+                          HomeScreen.current_phone_no = _phoneController.text;
+                          HomeScreen.current_ephone_no =
+                              "Not Given.Please Provide";
+
+                          context.loaderOverlay.hide();
+                          Navigator.pushNamed(context, MainPage.id);
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                    } else {
+                      // Email or password is empty
+                      print("Email or password cannot be empty");
+                    }
                   } else {
                     // Form is invalid
                     print("Form is invalid");
                   }
                 },
                 color: Colors.lightBlue,
-                // Background color
                 textColor: Colors.black,
-                // Text color
                 elevation: 5,
-                // Add a subtle shadow for elevation
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0), // Make it rounded
                 ),
                 padding: EdgeInsets.symmetric(
                   vertical: 12.0,
                 ),
-                // Reduce the padding to make it smaller
                 child: Text(
                   'Sign up',
                   style: TextStyle(
-                    fontSize: 16, // Make text size slightly smaller
-                    fontWeight: FontWeight.bold, // Make the text bold
-                    letterSpacing: 1.0, // Add letter spacing for a cleaner look
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.0,
                   ),
                 ),
               ),

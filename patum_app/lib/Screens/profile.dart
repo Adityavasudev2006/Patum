@@ -2,6 +2,13 @@ import 'package:Patum/Screens/home.dart';
 import 'package:Patum/Screens/records.dart';
 import 'package:flutter/material.dart';
 import 'package:Patum/Components/bottom_bar.dart';
+import 'package:Patum/Screens/login.dart';
+
+String? first_name = HomeScreen.current_first_name;
+String? last_name = HomeScreen.current_last_name;
+String? email = HomeScreen.current_email;
+String? phone_no = HomeScreen.current_phone_no;
+String? ephone_no = HomeScreen.current_ephone_no;
 
 class ProfileScreen extends StatefulWidget {
   static String id = "profile_screen";
@@ -13,12 +20,11 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isEditing = false;
 
-  final firstNameController = TextEditingController(text: "Aditya");
-  final lastNameController = TextEditingController(text: "Vasudev K");
-  final phoneController = TextEditingController(text: "8095059215");
-  final emergencyController = TextEditingController(text: "8095059215");
-  final emailController =
-      TextEditingController(text: "adityavasudev@gmail.com");
+  final firstNameController = TextEditingController(text: first_name);
+  final lastNameController = TextEditingController(text: last_name);
+  final phoneController = TextEditingController(text: phone_no);
+  final emergencyController = TextEditingController(text: ephone_no);
+  final emailController = TextEditingController(text: email);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fit: StackFit.expand,
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage('images/profile.jpg'),
+                      backgroundImage: AssetImage('assets/profile_logo.png'),
                     ),
                     Positioned(
                       bottom: 0,
@@ -144,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         bottomNavigationBar: SizedBox(
-          height: 88, // or any height you want for the navbar
+          height: 95, // or any height you want for the navbar
           child: BottomBar(
             homeIconColor: Colors.white,
             recordsIconColor: Colors.white,

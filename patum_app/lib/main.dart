@@ -9,9 +9,11 @@ import 'package:Patum/Screens/chatbot.dart';
 import 'Screens/splash_screen.dart';
 import 'package:Patum/Screens/login.dart';
 import 'package:Patum/Screens/signup.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Initialize Firebase
   await dotenv.load(fileName: ".env");
   runApp(Patum());
 }

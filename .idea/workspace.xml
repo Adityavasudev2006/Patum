@@ -10,24 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3d818a65-d5cf-4078-9096-45ac006f241d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/arm64-v8a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/arm64-v8a/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/armeabi-v7a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/armeabi-v7a/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86_64/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86_64/configure_fingerprint.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/assets/pic1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/assets/pic2.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/assets/pic3.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/home.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/profile.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/records.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/records.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/signup.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

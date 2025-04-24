@@ -207,7 +207,7 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
       bottomNavigationBar: SizedBox(
-        height: 88, // or any height you want for the navbar
+        height: 95, // or any height you want for the navbar
         child: BottomBar(
           homeIconColor: Colors.red,
           recordsIconColor: Colors.white,

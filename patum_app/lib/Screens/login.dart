@@ -1,13 +1,19 @@
 import 'package:Patum/Screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 // Main Login Screen
 class HomeScreen extends StatelessWidget {
   static String id = "home_screen";
+
+  static String? current_first_name;
+  static String? current_last_name;
+  static String? current_phone_no;
+  static String? current_email;
+  static String? current_ephone_no;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +86,9 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+
   bool _isObscured = true;
   final _formKey = GlobalKey<FormState>();
 
@@ -93,26 +102,39 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
-  void _handleLogin() {
+  void _handleLogin() async {
+    context.loaderOverlay.show();
     if (_formKey.currentState!.validate()) {
       // Form is valid, proceed with login logic
-      print('Email: ${_emailController.text}');
-      print('Password: ${_passwordController.text}');
+      try {
+        if (_emailController.text != null && _passwordController.text != null) {
+          final user = await _auth.signInWithEmailAndPassword(
+            email: _emailController.text,
+            password: _passwordController.text,
+          );
+          //if that user exists in server it wont be null.
+          if (user != null) {
+            takeProfileDetails();
+            context.loaderOverlay.hide();
+            Navigator.pushNamed(context, MainPage.id);
+          }
+        }
+      } catch (e) {
+        context.loaderOverlay.hide();
+        print(e);
+      }
+    }
+  }
 
-      bool loginSuccess = true;
-      if (loginSuccess) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => MainPage()),
-        );
-      } else {
-        // Show an error message if login fails
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Login failed. Please check your credentials.'),
-            backgroundColor: Colors.redAccent,
-          ),
-        );
+  void takeProfileDetails() async {
+    final userdetails = await _firestore.collection('user_data').get();
+    for (var details in userdetails.docs) {
+      if (details['email'] == _emailController.text) {
+        HomeScreen.current_email = _emailController.text;
+        HomeScreen.current_first_name = details['first_name'];
+        HomeScreen.current_last_name = details['last_name'];
+        HomeScreen.current_phone_no = details['phone_no'];
+        HomeScreen.current_ephone_no = details['emergency_no'];
       }
     }
   }
