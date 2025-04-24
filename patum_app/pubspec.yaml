@@ -36,6 +36,7 @@ dependencies:
   firebase_core: ^3.13.0
   firebase_auth: ^5.5.2
   cloud_firestore: ^5.6.6
+  adaptive_dialog: ^2.4.1
 
 dev_dependencies:
   flutter_test:

@@ -4,6 +4,7 @@ import 'home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:Patum/Components/modals.dart';
 
 // Main Login Screen
 class HomeScreen extends StatelessWidget {
@@ -102,9 +103,12 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  final modal = Modal();
+
   void _handleLogin() async {
-    context.loaderOverlay.show();
+    // Form is valid
     if (_formKey.currentState!.validate()) {
+      context.loaderOverlay.show();
       // Form is valid, proceed with login logic
       try {
         if (_emailController.text != null && _passwordController.text != null) {
@@ -117,13 +121,16 @@ class _LoginFormState extends State<LoginForm> {
             takeProfileDetails();
             context.loaderOverlay.hide();
             Navigator.pushNamed(context, MainPage.id);
+          } else {
+            context.loaderOverlay.hide();
+            await modal.showAccountNotFoundDialog(context);
           }
         }
       } catch (e) {
         context.loaderOverlay.hide();
-        print(e);
+        await modal.showAccountNotFoundDialog(context);
       }
-    }
+    } else {}
   }
 
   void takeProfileDetails() async {

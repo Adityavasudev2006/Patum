@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:Patum/Screens/login.dart';
+import 'package:Patum/Components/modals.dart';
 
 class SignUp extends StatelessWidget {
   static String id = "signup_screen";
@@ -102,6 +103,8 @@ class _LoginFormState extends State<LoginForm> {
     _confirmPasswordController.dispose();
     super.dispose();
   }
+
+  final modal = Modal();
 
   @override
   Widget build(BuildContext context) {
@@ -414,9 +417,13 @@ class _LoginFormState extends State<LoginForm> {
 
                           context.loaderOverlay.hide();
                           Navigator.pushNamed(context, MainPage.id);
+                        } else {
+                          context.loaderOverlay.hide();
+                          await modal.showAccountExistsDialog(context);
                         }
                       } catch (e) {
-                        print(e);
+                        context.loaderOverlay.hide();
+                        await modal.showAccountExistsDialog(context);
                       }
                     } else {
                       // Email or password is empty
