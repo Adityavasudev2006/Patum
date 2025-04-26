@@ -10,7 +10,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  static bool _isFirstLoad = true;
   bool isEditing = false;
+
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
 
   late TextEditingController firstNameController;
   late TextEditingController lastNameController;
@@ -21,14 +25,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    firstNameController =
-        TextEditingController(text: HomeScreen.current_first_name);
-    lastNameController =
-        TextEditingController(text: HomeScreen.current_last_name);
-    phoneController = TextEditingController(text: HomeScreen.current_phone_no);
-    emergencyController =
-        TextEditingController(text: HomeScreen.current_ephone_no);
-    emailController = TextEditingController(text: HomeScreen.current_email);
+
+    firstNameController = TextEditingController();
+    lastNameController = TextEditingController();
+    phoneController = TextEditingController();
+    emergencyController = TextEditingController();
+    emailController = TextEditingController();
+
+    if (_isFirstLoad) {
+      print(
+          "ProfileScreen: First load detected, initializing from HomeScreen statics.");
+      firstNameController.text = HomeScreen.current_first_name ?? '';
+      lastNameController.text = HomeScreen.current_last_name ?? '';
+      phoneController.text = HomeScreen.current_phone_no ?? '';
+      emergencyController.text = HomeScreen.current_ephone_no ?? '';
+      emailController.text = HomeScreen.current_email ?? '';
+
+      _isFirstLoad = false;
+    }
   }
 
   @override
@@ -40,9 +54,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     emailController.dispose();
     super.dispose();
   }
-
-  final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
 
   void saveProfile(String firstName, String lastName, String phone,
       String emergencyPhone, String email) async {
@@ -81,205 +92,205 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "Profile",
-            style: TextStyle(color: Colors.teal),
-          ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.grey[700]),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Profile",
+          style: TextStyle(color: Colors.teal),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              SizedBox(
-                height: 125,
-                width: 125,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/profile_logo.png'),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        height: 36,
-                        width: 36,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 4,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: IconButton(
-                          icon: Icon(Icons.camera_alt_outlined, size: 18),
-                          onPressed: () {},
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              _buildEditableTile(
-                  icon: Icons.person_2_outlined,
-                  controller: firstNameController),
-              _buildEditableTile(
-                  icon: Icons.person_2_outlined,
-                  controller: lastNameController),
-              _buildEditableTile(
-                  icon: Icons.phone, controller: phoneController),
-              _buildEditableTile(
-                  icon: Icons.phone_in_talk, controller: emergencyController),
-              _buildEditableTile(
-                  icon: Icons.email_outlined, controller: emailController),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+        automaticallyImplyLeading: false,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 40),
+            SizedBox(
+              height: 125,
+              width: 125,
+              child: Stack(
+                fit: StackFit.expand,
                 children: [
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.only(
-                          left: 30, right: 15), // Adjusted margins
-                      decoration: BoxDecoration(
-                        color: Colors.grey, // Grey color for logout
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            blurRadius: 12,
-                            offset: Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          context.loaderOverlay.show();
-                          await _auth.signOut();
-
-                          firstNameController.clear();
-                          lastNameController.clear();
-                          phoneController.clear();
-                          emergencyController.clear();
-                          emailController.clear();
-
-                          Navigator.pushNamed(context, HomeScreen.id);
-                          context.loaderOverlay.hide();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: Colors.transparent,
-                          shadowColor: Colors.transparent,
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.logout,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Logout',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/profile_logo.png'),
                   ),
-                  // Existing Edit/Save Button
-                  Expanded(
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
                     child: Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.only(
-                          left: 15, right: 30), // Adjusted margins
+                      height: 36,
+                      width: 36,
                       decoration: BoxDecoration(
-                        color: Colors.lightBlue,
-                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white,
+                        shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.lightBlue.withOpacity(0.5),
-                            blurRadius: 12,
-                            offset: Offset(0, 6),
+                            color: Colors.black26,
+                            blurRadius: 4,
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            if (isEditing) {
-                              // Save updated values
-                              saveProfile(
-                                firstNameController.text,
-                                lastNameController.text,
-                                phoneController.text,
-                                emergencyController.text,
-                                emailController.text,
-                              );
-                            }
-                            isEditing = !isEditing;
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: Colors.transparent,
-                          shadowColor: Colors.transparent,
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              isEditing ? Icons.check : Icons.edit,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              isEditing ? 'Save' : 'Edit',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
+                      child: IconButton(
+                        icon: Icon(Icons.camera_alt_outlined, size: 18),
+                        onPressed: () {},
                       ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 100),
-            ],
-          ),
+            ),
+            SizedBox(height: 20),
+            _buildEditableTile(
+                icon: Icons.person_2_outlined, controller: firstNameController),
+            _buildEditableTile(
+                icon: Icons.person_2_outlined, controller: lastNameController),
+            _buildEditableTile(icon: Icons.phone, controller: phoneController),
+            _buildEditableTile(
+                icon: Icons.phone_in_talk, controller: emergencyController),
+            _buildEditableTile(
+                icon: Icons.email_outlined, controller: emailController),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                        left: 30, right: 15), // Adjusted margins
+                    decoration: BoxDecoration(
+                      color: Colors.grey, // Grey color for logout
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          blurRadius: 12,
+                          offset: Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        context.loaderOverlay.show();
+                        context.loaderOverlay.show();
+                        await _auth.signOut();
+
+                        _isFirstLoad = true;
+
+                        HomeScreen.current_first_name = null;
+                        HomeScreen.current_last_name = null;
+                        HomeScreen.current_phone_no = null;
+                        HomeScreen.current_ephone_no = null;
+                        HomeScreen.current_email = null;
+
+                        firstNameController.clear();
+                        lastNameController.clear();
+                        phoneController.clear();
+                        emergencyController.clear();
+                        emailController.clear();
+
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, HomeScreen.id, (route) => false);
+                        context.loaderOverlay.hide();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Logout',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                // Existing Edit/Save Button
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                        left: 15, right: 30), // Adjusted margins
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlue,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.lightBlue.withOpacity(0.5),
+                          blurRadius: 12,
+                          offset: Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          if (isEditing) {
+                            // Save updated values
+                            saveProfile(
+                              firstNameController.text,
+                              lastNameController.text,
+                              phoneController.text,
+                              emergencyController.text,
+                              emailController.text,
+                            );
+                          }
+                          isEditing = !isEditing;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            isEditing ? Icons.check : Icons.edit,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            isEditing ? 'Save' : 'Edit',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 100),
+          ],
         ),
       ),
     );

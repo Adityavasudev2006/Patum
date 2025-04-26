@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:Patum/Components/modals.dart';
-import 'package:Patum/main.dart';
+import 'package:Patum/Components/bottom_bar.dart';
 
 // Main Login Screen
 class HomeScreen extends StatelessWidget {

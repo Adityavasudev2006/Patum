@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:Patum/Screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:Patum/Screens/login.dart';
 import 'package:Patum/Components/modals.dart';
-import 'package:Patum/main.dart';
+import 'package:Patum/Components/bottom_bar.dart';
 
 class SignUp extends StatelessWidget {
   static String id = "signup_screen";

@@ -7,6 +7,7 @@ import 'package:Patum/Screens/chatbot.dart';
 import 'package:Patum/Components/const.dart';
 import 'package:Patum/Components/clickable_options.dart';
 import 'package:Patum/main.dart';
+import 'package:Patum/Components/bottom_bar.dart';
 
 class MainPage extends StatefulWidget {
   @override
