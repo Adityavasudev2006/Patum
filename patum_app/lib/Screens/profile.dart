@@ -7,16 +7,6 @@ import 'package:Patum/Screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-final firstNameController =
-    TextEditingController(text: HomeScreen.current_first_name);
-final lastNameController =
-    TextEditingController(text: HomeScreen.current_last_name);
-final phoneController =
-    TextEditingController(text: HomeScreen.current_phone_no);
-final emergencyController =
-    TextEditingController(text: HomeScreen.current_ephone_no);
-final emailController = TextEditingController(text: HomeScreen.current_email);
-
 class ProfileScreen extends StatefulWidget {
   static String id = "profile_screen";
 
@@ -26,6 +16,35 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isEditing = false;
+
+  late TextEditingController firstNameController;
+  late TextEditingController lastNameController;
+  late TextEditingController phoneController;
+  late TextEditingController emergencyController;
+  late TextEditingController emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    firstNameController =
+        TextEditingController(text: HomeScreen.current_first_name);
+    lastNameController =
+        TextEditingController(text: HomeScreen.current_last_name);
+    phoneController = TextEditingController(text: HomeScreen.current_phone_no);
+    emergencyController =
+        TextEditingController(text: HomeScreen.current_ephone_no);
+    emailController = TextEditingController(text: HomeScreen.current_email);
+  }
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    phoneController.dispose();
+    emergencyController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
 
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
@@ -135,64 +154,133 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _buildEditableTile(
                   icon: Icons.email_outlined, controller: emailController),
               SizedBox(height: 30),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: 150),
-                decoration: BoxDecoration(
-                  color: Colors.lightBlue,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.lightBlue.withOpacity(0.5),
-                      blurRadius: 12,
-                      offset: Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      if (isEditing) {
-                        // Save updated values
-                        saveProfile(
-                          firstNameController.text,
-                          lastNameController.text,
-                          phoneController.text,
-                          emergencyController.text,
-                          emailController.text,
-                        );
-                      }
-                      isEditing = !isEditing;
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        isEditing ? Icons.check : Icons.edit,
-                        color: Colors.white,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(
+                          left: 30, right: 15), // Adjusted margins
+                      decoration: BoxDecoration(
+                        color: Colors.grey, // Grey color for logout
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            blurRadius: 12,
+                            offset: Offset(0, 6),
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 10),
-                      Text(
-                        isEditing ? 'Save' : 'Edit',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          context.loaderOverlay.show();
+                          await _auth.signOut();
+
+                          firstNameController.clear();
+                          lastNameController.clear();
+                          phoneController.clear();
+                          emergencyController.clear();
+                          emailController.clear();
+
+                          Navigator.pushNamed(context, HomeScreen.id);
+                          context.loaderOverlay.hide();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              'Logout',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                  // Existing Edit/Save Button
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(
+                          left: 15, right: 30), // Adjusted margins
+                      decoration: BoxDecoration(
+                        color: Colors.lightBlue,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.lightBlue.withOpacity(0.5),
+                            blurRadius: 12,
+                            offset: Offset(0, 6),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            if (isEditing) {
+                              // Save updated values
+                              saveProfile(
+                                firstNameController.text,
+                                lastNameController.text,
+                                phoneController.text,
+                                emergencyController.text,
+                                emailController.text,
+                              );
+                            }
+                            isEditing = !isEditing;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              isEditing ? Icons.check : Icons.edit,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              isEditing ? 'Save' : 'Edit',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 30),
             ],

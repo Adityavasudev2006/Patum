@@ -327,7 +327,12 @@ class _LoginFormState extends State<LoginForm> {
                     fillColor: Colors.teal[100],
                   ),
                   validator: (value) {
-                    return value!.isEmpty ? 'Please enter password' : null;
+                    if (value!.isEmpty) {
+                      return 'Please enter password';
+                    } else if (value.length < 6) {
+                      return 'Password should be minimum 6 charcaters long';
+                    }
+                    return null;
                   },
                 ),
               ),

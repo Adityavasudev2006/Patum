@@ -118,7 +118,7 @@ class _LoginFormState extends State<LoginForm> {
           );
           //if that user exists in server it wont be null.
           if (user != null) {
-            takeProfileDetails();
+            await takeProfileDetails();
             context.loaderOverlay.hide();
             Navigator.pushNamed(context, MainPage.id);
           } else {
@@ -133,7 +133,7 @@ class _LoginFormState extends State<LoginForm> {
     } else {}
   }
 
-  void takeProfileDetails() async {
+  Future<void> takeProfileDetails() async {
     final userdetails = await _firestore.collection('user_data').get();
     for (var details in userdetails.docs) {
       if (details['email'] == _emailController.text) {

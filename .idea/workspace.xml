@@ -10,22 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3d818a65-d5cf-4078-9096-45ac006f241d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/arm64-v8a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/arm64-v8a/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/armeabi-v7a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/armeabi-v7a/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86_64/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/android/app/.cxx/Debug/5n576k1w/x86_64/configure_fingerprint.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/assets/pic1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/assets/pic2.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/assets/pic3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/home.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/login.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/profile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/records.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/records.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/patum_app/lib/Screens/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/Screens/signup.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patum_app/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patum_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/patum_app/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +72,7 @@
     "git-widget-placeholder": "main",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/adityavk/StudioProjects/Patum",
+    "last_opened_file_path": "/home/adityavk/StudioProjects/flash_chat",
     "settings.editor.selected.configurable": "dart.settings",
     "show.migrate.to.gradle.popup": "false"
   }

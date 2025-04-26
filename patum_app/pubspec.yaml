@@ -37,6 +37,7 @@ dependencies:
   firebase_auth: ^5.5.2
   cloud_firestore: ^5.6.6
   adaptive_dialog: ^2.4.1
+  curved_navigation_bar: ^1.0.6
 
 dev_dependencies:
   flutter_test:
