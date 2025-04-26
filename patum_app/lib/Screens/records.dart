@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:Patum/Components/bottom_bar.dart';
-import 'package:Patum/Screens/home.dart';
-import 'package:Patum/Screens/profile.dart';
 
 class Records extends StatelessWidget {
-  static String id = "records_screen";
-
   @override
   Widget build(BuildContext context) {
     var listnames = [
@@ -87,21 +82,6 @@ class Records extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: SizedBox(
-        height: 95, // or any height you want for the navbar
-        child: BottomBar(
-          homeIconColor: Colors.white,
-          recordsIconColor: Colors.red,
-          profileIconColor: Colors.white,
-          onPressed1: () {
-            Navigator.pushNamed(context, MainPage.id);
-          },
-          onPressed2: () {},
-          onPressed3: () {
-            Navigator.pushNamed(context, ProfileScreen.id);
-          },
-        ),
       ),
     );
   }

@@ -1,17 +1,14 @@
-import 'package:Patum/Screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:Patum/Components/location_module.dart';
-import 'package:Patum/Screens/records.dart';
 import 'package:Patum/Components/camera_module.dart';
 import 'package:Patum/Components/call_module.dart';
 import 'package:Patum/Screens/chatbot.dart';
 import 'package:Patum/Components/const.dart';
-import 'package:Patum/Components/bottom_bar.dart';
+import 'package:Patum/Components/clickable_options.dart';
+import 'package:Patum/main.dart';
 
 class MainPage extends StatefulWidget {
-  static String id = "main_screen";
-
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -98,8 +95,11 @@ class _MainPageState extends State<MainPage> {
                         MainTextButton(
                           ButtonText: 'Complete Profile',
                           onPressed: () {
-                            Navigator.pushNamed(context, ProfileScreen.id);
-                          },
+                            final navState = MainNavigationWrapper.of(context);
+                            if (navState != null) {
+                              navState.navigateToProfile();
+                            }
+                          }, // Corrected: Removed extra comma and brace issue here
                         ),
                       ],
                     ),
@@ -204,22 +204,10 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           SliderOptions(),
+          SizedBox(
+            height: 80.0,
+          ),
         ],
-      ),
-      bottomNavigationBar: SizedBox(
-        height: 95, // or any height you want for the navbar
-        child: BottomBar(
-          homeIconColor: Colors.red,
-          recordsIconColor: Colors.white,
-          profileIconColor: Colors.white,
-          onPressed1: () {},
-          onPressed2: () {
-            Navigator.pushNamed(context, Records.id);
-          },
-          onPressed3: () {
-            Navigator.pushNamed(context, ProfileScreen.id);
-          },
-        ),
       ),
     );
   }

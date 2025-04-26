@@ -1,10 +1,10 @@
 import 'package:Patum/Screens/signup.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:Patum/Components/modals.dart';
+import 'package:Patum/main.dart';
 
 // Main Login Screen
 class HomeScreen extends StatelessWidget {
@@ -120,7 +120,7 @@ class _LoginFormState extends State<LoginForm> {
           if (user != null) {
             await takeProfileDetails();
             context.loaderOverlay.hide();
-            Navigator.pushNamed(context, MainPage.id);
+            Navigator.pushReplacementNamed(context, MainNavigationWrapper.id);
           } else {
             context.loaderOverlay.hide();
             await modal.showAccountNotFoundDialog(context);

@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:Patum/Screens/login.dart';
 import 'package:Patum/Components/modals.dart';
+import 'package:Patum/main.dart';
 
 class SignUp extends StatelessWidget {
   static String id = "signup_screen";
@@ -421,7 +422,8 @@ class _LoginFormState extends State<LoginForm> {
                               "Not Given.Please Provide";
 
                           context.loaderOverlay.hide();
-                          Navigator.pushNamed(context, MainPage.id);
+                          Navigator.pushReplacementNamed(
+                              context, MainNavigationWrapper.id);
                         } else {
                           context.loaderOverlay.hide();
                           await modal.showAccountExistsDialog(context);

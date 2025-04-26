@@ -1,15 +1,10 @@
-import 'package:Patum/Screens/home.dart';
-import 'package:Patum/Screens/records.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:Patum/Components/bottom_bar.dart';
 import 'package:Patum/Screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileScreen extends StatefulWidget {
-  static String id = "profile_screen";
-
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -282,23 +277,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 100),
             ],
-          ),
-        ),
-        bottomNavigationBar: SizedBox(
-          height: 95, // or any height you want for the navbar
-          child: BottomBar(
-            homeIconColor: Colors.white,
-            recordsIconColor: Colors.white,
-            profileIconColor: Colors.red,
-            onPressed1: () {
-              Navigator.pushNamed(context, MainPage.id);
-            },
-            onPressed2: () {
-              Navigator.pushNamed(context, Records.id);
-            },
-            onPressed3: () {},
           ),
         ),
       ),
