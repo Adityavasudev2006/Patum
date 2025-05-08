@@ -11,14 +11,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.8
-  carousel_slider: ^5.0.0
   just_audio: ^0.9.46
   flutter_phone_direct_caller: ^2.1.1
   camerawesome: ^2.1.0
   dio: ^5.8.0+1
   path_provider: ^2.1.5
-  open_file: ^3.5.10
   geolocator: ^13.0.2
   url_launcher: ^6.3.1
   loader_overlay: ^5.0.0
@@ -31,13 +28,11 @@ dependencies:
   uuid: ^4.3.3
   flutter_dotenv: ^5.0.2
   provider: ^6.0.0
-  intl: ^0.18.0
-  shared_preferences: ^2.2.2
   firebase_core: ^3.13.0
   firebase_auth: ^5.5.2
   cloud_firestore: ^5.6.6
-  adaptive_dialog: ^2.4.1
   curved_navigation_bar: ^1.0.6
+  animated_text_kit: ^4.2.3
 
 dev_dependencies:
   flutter_test:
@@ -77,7 +72,7 @@ flutter:
     - family: Montessart_Mid
       fonts:
         - asset: fonts/Montserrat-Medium.ttf
-          
+
     - family: Sacramento
       fonts:
         - asset: fonts/Sacramento-Regular.ttf
