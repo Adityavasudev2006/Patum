@@ -8,11 +8,14 @@ import 'package:Patum/Screens/login.dart';
 import 'package:Patum/Screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:Patum/Components/bottom_bar.dart';
+import 'package:Patum/Services/background_services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Initialize Firebase
   await dotenv.load(fileName: ".env");
+
+  BackgroundServices.startTimer();
   runApp(Patum());
 }
 

@@ -1,13 +1,15 @@
+import 'package:Patum/Screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:Patum/Components/location_module.dart';
+import 'package:Patum/Services/location_module.dart';
 import 'package:Patum/Components/camera_module.dart';
 import 'package:Patum/Components/call_module.dart';
 import 'package:Patum/Screens/chatbot.dart';
-import 'package:Patum/Components/const.dart';
 import 'package:Patum/Components/clickable_options.dart';
-import 'package:Patum/main.dart';
 import 'package:Patum/Components/bottom_bar.dart';
+import 'package:Patum/Services/background_services.dart';
+
+String? pNumber;
 
 class MainPage extends StatefulWidget {
   @override
@@ -298,7 +300,7 @@ class SliderOptions extends StatelessWidget {
   }
 
   void call_emergency() {
-    pNumber = emergencyNumber;
+    pNumber = HomeScreen.current_ephone_no;
     CallModule.callNumber();
   }
 
@@ -346,7 +348,7 @@ class SliderOptions extends StatelessWidget {
               optionText: 'Report Crime',
               logoPlace: 'assets/report_crime_logo.png',
               onPressed: () {
-                LocationModule.getCurrentLocation(context);
+                LocationModule.getCurrentLocation();
               },
             ),
             clickableOptions(

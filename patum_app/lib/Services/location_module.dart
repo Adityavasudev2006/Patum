@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:Patum/Components/modals.dart';
 
 double myLatitude = 0.0;
 double myLongitude = 0.0;
 
+final modal = Modal();
+
 class LocationModule {
-  static Future<void> getCurrentLocation(BuildContext context) async {
+  static Future<Map<String, double>?> getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -15,7 +18,7 @@ class LocationModule {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       print("Location services are disabled.");
-      return;
+      return null;
     }
 
     // Check location permissions
@@ -24,26 +27,31 @@ class LocationModule {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         print("Location permissions are denied.");
-        return;
+        return null;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       print("Location permissions are permanently denied.");
-      return;
+      return null;
     }
 
     // Get current location
     Position position = await Geolocator.getCurrentPosition(
       locationSettings: const LocationSettings(
-        accuracy: LocationAccuracy.high, // Use LocationAccuracy here
-        distanceFilter: 100, // Optional: Distance filter (in meters)
+        accuracy: LocationAccuracy.low,
+        distanceFilter: 100,
       ),
     );
 
     print("Latitude: ${position.latitude}, Longitude: ${position.longitude}");
     myLatitude = position.latitude;
     myLongitude = position.longitude;
+
+    return {
+      "latitude": position.latitude,
+      "longitude": position.longitude,
+    };
   }
 
   static Future<void> openGoogleMaps() async {
@@ -62,7 +70,7 @@ class LocationModule {
     context.loaderOverlay.show(); // Show loading overlay
 
     try {
-      await getCurrentLocation(context); // Get location
+      await getCurrentLocation(); // Get location
       await openGoogleMaps(); // Open Google Maps
     } catch (e) {
       print("Error: $e");

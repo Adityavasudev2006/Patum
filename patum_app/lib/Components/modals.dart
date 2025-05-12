@@ -99,4 +99,38 @@ class Modal {
       Navigator.pop(context);
     }
   }
+
+  Future<String?> ifLocationOrInternetConnected(BuildContext context) async {
+    final result = await showCupertinoModalPopup(
+      context: context,
+      filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+      builder: (context) => CupertinoActionSheet(
+        title: Text(
+          'Location Services not enabled or No Internet',
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+        ),
+        message: Text(
+          'Check if your location services feature is enabled or not.If enabled check if the device is connected to internet!',
+          style: TextStyle(color: CupertinoColors.secondaryLabel),
+        ),
+        actions: [
+          CupertinoActionSheetAction(
+            onPressed: () => Navigator.pop(context, 'retry'),
+            child: Text(
+              'Ok',
+              style: TextStyle(color: CupertinoColors.activeBlue),
+            ),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: () => Navigator.pop(context),
+          child: Text(
+            'Cancel',
+            style: TextStyle(color: CupertinoColors.destructiveRed),
+          ),
+        ),
+      ),
+    );
+    return result;
+  }
 }

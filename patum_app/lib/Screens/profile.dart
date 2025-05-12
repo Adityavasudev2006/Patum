@@ -3,6 +3,10 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:Patum/Screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -10,6 +14,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  File? _imageFile;
+  String? _downloadUrl;
+
   static bool _isFirstLoad = true;
   bool isEditing = false;
 
@@ -22,6 +29,137 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController emergencyController;
   late TextEditingController emailController;
 
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    XFile? pickedFile;
+
+    final ImageSource? source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Photo Library'),
+                onTap: () {
+                  Navigator.of(context).pop(ImageSource.gallery);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Camera'),
+                onTap: () {
+                  Navigator.of(context).pop(ImageSource.camera);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (source != null) {
+      try {
+        pickedFile = await picker.pickImage(
+          source: source,
+        );
+      } catch (e) {
+        print("Error picking image: $e");
+        // Check if the widget is still mounted before showing a SnackBar
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text("Error picking image: Could not get access.")),
+          );
+        }
+        return;
+      }
+    } else {
+      print("Image source selection cancelled.");
+      return;
+    }
+
+    if (pickedFile != null) {
+      context.loaderOverlay.show();
+      setState(() {
+        _imageFile = File(pickedFile!.path);
+      });
+
+      await _uploadImageToFirebase();
+    }
+  }
+
+  Future<void> _uploadImageToFirebase() async {
+    final email = HomeScreen.current_email;
+    if (_imageFile == null || email == null) {
+      print(
+          "Image file or email is null. Email: $email, ImageFile: $_imageFile");
+      return;
+    }
+
+    final url = Uri.parse("https://upload.imagekit.io/api/v1/files/upload");
+
+    final request = http.MultipartRequest("POST", url)
+      ..fields["fileName"] = "$email.jpg"
+      ..fields["publicKey"] = "public_bEcfe0aw3NTB9ANQEk8Zd4S2qz8="
+      ..fields["folder"] = "/profile_pics"
+      ..fields["useUniqueFileName"] = "true"
+      // If I upload another file with same name that should overwrite the existing one.
+      ..fields["overwriteFile"] = "true"
+      ..files.add(await http.MultipartFile.fromPath("file", _imageFile!.path));
+
+    request.headers['Authorization'] =
+        'Basic ${base64Encode(utf8.encode('private_sgJxaTwgFn1XaNQdq4YEBIlEpQ0=:'))}';
+
+    final response = await request.send();
+    final respStr = await response.stream.bytesToString();
+
+    if (response.statusCode == 200) {
+      final jsonResp = json.decode(respStr);
+      final newImageUrl = jsonResp["url"]; // Get the URL
+
+      setState(() {
+        _downloadUrl = newImageUrl;
+      });
+      print(
+          "Attempting to update Firestore for user: $email with URL: $newImageUrl");
+
+      // Update Firestore with ImageKit URL
+      final userDetails = await _firestore.collection('user_data').get();
+      bool updated = false;
+      for (var details in userDetails.docs) {
+        if (details['email'] == email) {
+          await _firestore.collection('user_data').doc(details.id).update({
+            'profile_pic': newImageUrl,
+          });
+          print("Firestore updated successfully for $email.");
+          updated = true;
+          break;
+        }
+      }
+      context.loaderOverlay.hide();
+      if (!updated) {
+        print("Failed to find user $email in Firestore to update profile_pic.");
+      }
+    } else {
+      print("ImageKit Upload failed: $respStr");
+      context.loaderOverlay.hide();
+    }
+  }
+
+  void _fetchProfilePic() async {
+    final userDetails = await _firestore.collection('user_data').get();
+    for (var details in userDetails.docs) {
+      if (details['email'] == HomeScreen.current_email) {
+        setState(() {
+          _downloadUrl = details['profile_pic'];
+        });
+        break;
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +169,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     phoneController = TextEditingController();
     emergencyController = TextEditingController();
     emailController = TextEditingController();
+
+    _fetchProfilePic();
 
     if (_isFirstLoad) {
       print(
@@ -112,7 +252,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fit: StackFit.expand,
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage('assets/profile_logo.png'),
+                    backgroundImage: _imageFile != null
+                        ? FileImage(_imageFile!)
+                        : (_downloadUrl != null
+                                ? NetworkImage(_downloadUrl!)
+                                : AssetImage('assets/profile_logo.png'))
+                            as ImageProvider,
                   ),
                   Positioned(
                     bottom: 0,
@@ -133,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       child: IconButton(
                         icon: Icon(Icons.camera_alt_outlined, size: 18),
-                        onPressed: () {},
+                        onPressed: _pickImage,
                       ),
                     ),
                   ),
@@ -172,7 +317,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     child: ElevatedButton(
                       onPressed: () async {
-                        context.loaderOverlay.show();
                         context.loaderOverlay.show();
                         await _auth.signOut();
 
